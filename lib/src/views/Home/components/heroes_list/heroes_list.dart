@@ -3,7 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:marvel_test/src/view_models/character_view_model.dart';
-import 'package:marvel_test/src/views/Home/components/heroes_list_card.dart';
+import 'package:marvel_test/src/views/Home/components/heroes_list/heroes_list_card.dart';
 
 class HeroesList extends StatefulWidget {
   const HeroesList({Key? key}) : super(key: key);

@@ -9,19 +9,18 @@ class CharacterViewModel extends GetxController {
   CharacterResponse? characterResponse;
   Results? heroSelected;
   var heroesList = <Results>[].obs;
-  getCharacters() async {
-    await CharacterService().getCharacters().then((value) {
+  var lastViewedHeroesList = <Results>[].obs;
+  getCharacters(String name) async {
+    await CharacterService().getCharacters(name).then((value) {
       characterResponse = CharacterResponse.fromJson(value.data['data']);
       heroesList.value = characterResponse!.results!;
-      // heroesList.refresh();
-      print(value);
     });
   }
 
   getCharacterById(int arguments) async {
     await CharacterService().getCharacterById(arguments).then((value) {
       heroSelected = CharacterResponse.fromJson(value.data['data']).results!.first;
-      print(value);
+      if (lastViewedHeroesList.length < 5) lastViewedHeroesList.value.add(heroSelected!);
     });
   }
 }

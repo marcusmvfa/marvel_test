@@ -36,30 +36,37 @@ class _DetailViewState extends State<DetailView> with SingleTickerProviderStateM
         constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.90),
         builder: (context) {
           return Padding(
-            padding: EdgeInsets.all(0),
+            padding: const EdgeInsets.all(0),
             child: FutureBuilder(
               future: viewModel.getCharacterById(heroId),
               builder: ((context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else {
-                  return ListView(
-                    shrinkWrap: true,
+                  return Column(
+                    // ListView(
+                    //   shrinkWrap: true,
                     children: [
                       Image.network(
                           "${viewModel.heroSelected!.thumbnail!.path}/portrait_uncanny.jpg",
                           fit: BoxFit.fill),
                       Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                         Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                            child:
-                                Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                              Text(
+                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                            Flexible(
+                              flex: 8,
+                              child: Text(
                                 viewModel.heroSelected!.name!,
+                                overflow: TextOverflow.fade,
+                                softWrap: false,
                                 style:
                                     GoogleFonts.barlow(fontSize: 30, fontWeight: FontWeight.bold),
                               ),
-                              IconButton(
+                            ),
+                            Flexible(
+                              flex: 1,
+                              child: IconButton(
                                   onPressed: () {
                                     Clipboard.setData(ClipboardData(
                                             text: viewModel.heroSelected!.urls!.first.url))
@@ -70,8 +77,10 @@ class _DetailViewState extends State<DetailView> with SingleTickerProviderStateM
                                           colorText: Colors.black);
                                     });
                                   },
-                                  icon: const Icon(Icons.ios_share_rounded))
-                            ])),
+                                  icon: const Icon(Icons.ios_share_rounded)),
+                            ),
+                          ]),
+                        ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                           child: Text(
